@@ -1,65 +1,77 @@
 # API Tester CLI
 
-A lightweight command-line HTTP client for developers who want to test, inspect, and debug APIs directly from the terminal.
+A lightweight command-line HTTP client built in Go for developers who need to test and inspect APIs directly from the terminal.
 
-API Tester CLI is being built with Go, with a focus on simplicity, performance, portability, and a clean developer experience.
+API Tester CLI provides a simple interface for sending HTTP requests without relying on a graphical API client.
 
 ## Features
 
-* Send HTTP requests directly from the terminal
-* Support for GET, POST, PUT, PATCH, and DELETE
+* HTTP methods: GET, POST, PUT, PATCH and DELETE
+* JSON request bodies
 * Custom HTTP headers
 * Query parameters
-* JSON request bodies
 * HTTP status inspection
 * Response headers
-* Response body formatting
+* Response body output
 * Request execution time
-* Request history
-* Environment variables
-* Cross-platform executable
+* Lightweight and cross-platform
+* Command-line focused workflow
 
 ## Installation
 
-### From source
+### Requirements
 
-Clone the repository:
+* Go 1.26 or later
 
-```bash
-git clone https://github.com/william-grassis67/apitest.git
-```
-
-Enter the project directory:
+### Clone the repository
 
 ```bash
-cd apitest
+git clone https://github.com/william-grassis67/api-tester.git
+cd api-tester
 ```
 
-Build the application:
+### Build
 
 ```bash
 go build -o apitest
 ```
 
-Run:
+Run the executable:
 
 ```bash
 ./apitest
 ```
 
+### Install globally
+
+On Linux:
+
+```bash
+go build -o apitest
+mv apitest ~/bin/
+```
+
+If `~/bin` is in your `PATH`, you can use:
+
+```bash
+apitest
+```
+
+from any directory.
+
 ## Usage
 
-### GET request
+### GET
 
 ```bash
 apitest GET https://api.example.com/users
 ```
 
-### POST request
+### POST
 
 ```bash
 apitest POST https://api.example.com/users \
-  -b '{"name":"William","email":"william@example.com"}'
+  --body '{"name":"William","email":"william@example.com"}'
 ```
 
 ### Custom headers
@@ -86,7 +98,6 @@ GET https://api.example.com/users
 Response
 Status: 200 OK
 Time: 142ms
-Size: 1.4 KB
 
 Body:
 [
@@ -100,18 +111,16 @@ Body:
 ## Project Structure
 
 ```text
-apitest/
-├── cmd/
-├── internal/
-│   ├── httpclient/
-│   └── output/
+api-tester/
+├── help/
+├── methods/
 ├── main.go
 ├── go.mod
-├── go.sum
+├── apitest
 └── README.md
 ```
 
-The project structure may evolve as new features are introduced.
+The project structure may evolve as new features are implemented.
 
 ## Technology
 
@@ -119,21 +128,14 @@ API Tester CLI is built with:
 
 * Go
 * Go Standard Library
-* net/http
-* encoding/json
+* `net/http`
+* `encoding/json`
 
-Additional dependencies may be introduced when they provide clear value to the project.
+The project intentionally keeps external dependencies to a minimum.
 
 ## Development
 
-Clone the repository:
-
-```bash
-git clone https://github.com/william-grassis67/apitest.git
-cd apitest
-```
-
-Run the project:
+Run the project directly:
 
 ```bash
 go run .
@@ -145,7 +147,7 @@ Run tests:
 go test ./...
 ```
 
-Build:
+Build the executable:
 
 ```bash
 go build -o apitest
@@ -156,8 +158,8 @@ go build -o apitest
 ### Core
 
 * [x] Project initialization
-* [ ] GET requests
-* [ ] POST requests
+* [x] GET requests
+* [x] POST requests
 * [ ] PUT requests
 * [ ] PATCH requests
 * [ ] DELETE requests
@@ -174,37 +176,35 @@ go build -o apitest
 * [ ] Environment variables
 * [ ] Collections
 * [ ] Configuration file
-* [ ] Colored terminal output
+* [ ] Improved terminal output
 * [ ] Interactive mode
 
 ### Advanced
 
-* [ ] Import OpenAPI specifications
+* [ ] OpenAPI import
 * [ ] API test assertions
 * [ ] Automated test execution
-* [ ] CI/CD support
+* [ ] CI/CD integration
 * [ ] Export request results
 * [ ] Parallel requests
 
 ## Design Goals
 
-The project follows a few principles:
-
 ### Simple
 
-A developer should be able to execute an HTTP request without learning a complicated command syntax.
+The goal is to make API requests from the terminal without requiring a complicated command syntax.
 
 ### Fast
 
-The tool should have minimal startup time and low resource consumption.
+The application is designed to have low overhead and quick startup times.
 
 ### Portable
 
-The application should work across major operating systems without requiring a runtime environment.
+API Tester CLI is written in Go and can be compiled as a standalone executable for different operating systems.
 
 ### Developer-focused
 
-Features should solve real problems encountered when developing and testing APIs.
+The project focuses on practical features that developers commonly need when developing and testing APIs.
 
 ## Contributing
 
@@ -213,22 +213,32 @@ Contributions are welcome.
 To contribute:
 
 1. Fork the repository.
-2. Create a branch for your change.
-3. Implement and test your changes.
-4. Commit your changes.
-5. Open a Pull Request.
-
-Example:
+2. Create a feature branch.
 
 ```bash
-git checkout -b feature/request-history
+git checkout -b feature/my-feature
 ```
 
-Run the test suite before submitting:
+3. Implement your changes.
+4. Test the project.
 
 ```bash
 go test ./...
 ```
+
+5. Commit your changes.
+
+```bash
+git commit -m "feat: add my feature"
+```
+
+6. Push your branch.
+
+```bash
+git push origin feature/my-feature
+```
+
+7. Open a Pull Request.
 
 ## License
 
@@ -238,14 +248,13 @@ The license will be defined before the first stable release.
 
 ## Author
 
-Developed by William Gabriel Roque de Assis.
+Developed by **William Gabriel Roque de Assis**.
 
 GitHub:
-
 https://github.com/william-grassis67
 
 ## Status
 
 API Tester CLI is currently in active development.
 
-The API and command syntax may change before the first stable release.
+The command syntax and available features may change before the first stable release.
